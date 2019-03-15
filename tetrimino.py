@@ -1,18 +1,5 @@
 import enum
-from grid import Grid
-
-class Coord:
-    """docstring for Coord"""
-    def __init__(self, x, y):
-        self.col = x
-        self.row = y
-        
-    def add(self, other):
-        return Coord(self.col + other.col, self.row + other.row)
-
-    def __str__(self):
-        return 'row: ' + str(self.row) + ', col: ' + str(self.col)
-
+from grid import Grid, Coord
 
 class TPiece(enum.Enum):
     I = 0
@@ -31,7 +18,7 @@ class Tetrimino:
         self.cubes = []
 
         if kind == TPiece.I:
-            self.cubes = [Coord(1, 0), Coord(0, 0), Coord(1, 0), Coord(2, 0)]
+            self.cubes = [Coord(-1, 0), Coord(0, 0), Coord(1, 0), Coord(2, 0)]
         if kind == TPiece.Q:
             self.cubes = [Coord(0, 0), Coord(1, 0), Coord(0, -1), Coord(1, -1)]
         if kind == TPiece.J:
@@ -41,7 +28,7 @@ class Tetrimino:
         if kind == TPiece.S:
             self.cubes = [Coord(0, 0), Coord(-1, 0), Coord(0, -1), Coord(1, -1)]
         if kind == TPiece.Z:
-            self.cubes = [Coord(0, 0), Coord(1, 0),  Coord(0, -1), Coord(-1, 1)]
+            self.cubes = [Coord(0, 0), Coord(1, 0),  Coord(0, 1), Coord(-1, 1)]
         if kind == TPiece.T:
             self.cubes = [Coord(0, 0), Coord(-1, 0), Coord(1, 0), Coord(0, -1)]
 

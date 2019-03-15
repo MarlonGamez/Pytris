@@ -1,12 +1,13 @@
-from grid import Grid
-from tetrimino import Tetrimino, Coord, TPiece
+from grid import Grid, Coord
+from tetrimino import Tetrimino, TPiece
 from tetris_queue import TQueue
 import random
 
 def main():
 
     grid = Grid()
-    current = Tetrimino(random.choice(list(TPiece)))
+    # current = Tetrimino(random.choice(list(TPiece)))
+    current = Tetrimino(TPiece.I)
     queue = TQueue(4)
     placed = []
 
@@ -32,16 +33,25 @@ def main():
             break
 
         new_pos = current.move(move)
-        if isInBound(new_pos):
+        in_bound, _ = grid.isInBound(current, new_pos)
+        if in_bound:
             current.pos = new_pos
-
+        else:
+            moveInBounds(grid, current)
 
         grid.refresh()
         print(grid)
 
 
-def isInBound(tetrimino):
-    return True
+def moveInBounds(grid, piece):
+    in_bound, move = grid.isInBound(piece, piece.pos)
+    while not in_bound:
+        piece.pos = piece.move(move)
+
+        in_bound, move = grid.isInBound(piece, piece.pos)
+
+
+
 
 
 if __name__ == '__main__':
