@@ -5,7 +5,7 @@ class Grid:
         self.width = width
         self.height = height
         self.curr = None
-        self.grid = [['X' for col in range(width)] for row in range(height)]
+        self.grid = [[' ' for col in range(width)] for row in range(height)]
 
 
     def set_current(self, tetrimino):
@@ -15,8 +15,7 @@ class Grid:
         return self.grid
 
     def refresh(self):
-        self.grid = [['X' for col in range(self.width)] for row in range(self.height)]
-        print(len(self.curr.cubes))
+        self.grid = [[' ' for col in range(self.width)] for row in range(self.height)]
         for cube in self.curr.cubes:
             spot = self.curr.pos.add(cube)
             self.grid[spot.row][spot.col] = 'O'
@@ -24,10 +23,11 @@ class Grid:
     def __str__(self):
         result = 'Height: ' + str(self.height) + ', Width: ' + str(self.width) + '\n'
         for row in self.grid:
+            result += '|'
             for char in row:
                 result += char
 
-            result += '\n'
+            result += '|\n'
 
         return result
         

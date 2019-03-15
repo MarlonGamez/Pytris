@@ -59,10 +59,10 @@ class Tetrimino:
             curr = self.cubes[i]
             if dir == 1:
                 # rotate clockwise
-                self.cubes[i] = Coord(curr.row, curr.col * -1)
+                self.cubes[i] = Coord(curr.row * -1, curr.col)
             else:
                 # rotate counter clockwise
-                self.cubes[i] = Coord(curr.row * -1, curr.col)
+                self.cubes[i] = Coord(curr.row, curr.col * -1)
 
         
 
