@@ -12,7 +12,7 @@ class Coord:
 
 class Grid:
     """docstring for Grid"""
-    def __init__(self, width=10, height=22):
+    def __init__(self, width, height):
         super(Grid, self).__init__()
         self.width = width
         self.height = height
@@ -32,7 +32,7 @@ class Grid:
             cube = self.curr.pos.add(offset)
             self.grid[cube.row][cube.col] = 'O'
 
-    def isInBound(self, piece, pos):
+    def is_in_bounds(self, piece, pos):
         in_bound = False
         x_move = 0
         y_move = 0

@@ -2,13 +2,16 @@ from grid import Grid, Coord
 from tetrimino import Tetrimino, TPiece
 from tetris_queue import TQueue
 import random
+import sys
 
 def main():
+    # argv = [width, height, queue, first]
+    grid_width, grid_height, queue_size, first = process_args()
 
-    grid = Grid()
-    # current = Tetrimino(random.choice(list(TPiece)))
-    current = Tetrimino(TPiece.I)
-    queue = TQueue(4)
+    grid = Grid(grid_width, grid_height)
+    current = Tetrimino(first, Coord(grid_width//2, 1))
+    queue = TQueue(queue_size)
+    hold = None
     placed = []
 
     grid.set_current(current)
@@ -33,22 +36,40 @@ def main():
             break
 
         new_pos = current.move(move)
-        in_bound, _ = grid.isInBound(current, new_pos)
+        in_bound, _ = grid.is_in_bounds(current, new_pos)
         if in_bound:
             current.pos = new_pos
         else:
-            moveInBounds(grid, current)
+            move_in_bounds(grid, current)
 
         grid.refresh()
         print(grid)
 
+def process_args():
+    args = {arg.split('=')[0].strip().lower():int(arg.split('=')[1].strip()) for arg in sys.argv[1:]}
 
-def moveInBounds(grid, piece):
-    in_bound, move = grid.isInBound(piece, piece.pos)
+    grid_width = 10
+    grid_height = 22
+    queue_size = 4
+    first = random.choice(list(TPiece))
+
+    if 'first' in args:
+        first = TPiece(args['first'])
+    if 'width' in args:
+        grid_width = args['width']
+    if 'height' in args:
+        grid_height = args['height']
+    if 'queue' in args:
+        queue_size = args['queue']
+
+    return grid_width, grid_height, queue_size, first
+
+def move_in_bounds(grid, piece):
+    in_bound, move = grid.is_in_bounds(piece, piece.pos)
     while not in_bound:
         piece.pos = piece.move(move)
 
-        in_bound, move = grid.isInBound(piece, piece.pos)
+        in_bound, move = grid.is_in_bounds(piece, piece.pos)
 
 
 
