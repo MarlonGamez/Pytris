@@ -34,7 +34,7 @@ def main():
         elif cmd == 'q':
             grid.curr.rotate(0)
             move = grid.rotate_kick()
-        else:
+        elif cmd == 'x':
             break
 
         can_move = grid.piece_can_move(move)
@@ -46,7 +46,7 @@ def main():
             # move_in_bounds(grid, grid.curr)
 
 
-
+        grid.clear_lines()
         grid.refresh()
         print(grid)
 

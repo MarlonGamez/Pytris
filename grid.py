@@ -33,6 +33,20 @@ class Grid:
             self.placed[cube_pos.row][cube_pos.col] = self.curr.char
         self.curr = next
 
+    def clear_lines(self):
+        i = len(self.placed)-1
+        while i >= 0:
+            if ' ' not in self.placed[i]:
+                j = i
+                while j > 0:
+                    self.placed[j] = self.placed[j - 1]
+                    j -= 1
+
+                i += 1
+
+            i -= 1
+
+
     def get_grid(self):
         return self.grid
 
