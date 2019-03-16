@@ -11,7 +11,9 @@ class TQueue(Queue):
         for i in range(size):
             super().put(Tetrimino(random.choice(list(TPiece))))
 
-    def get():
+    def get(self):
         # get next tetrimino and push a random one to the queue
         result = super().get()
         super().put(Tetrimino(random.choice(list(TPiece))))
+
+        return result

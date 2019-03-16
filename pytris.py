@@ -10,11 +10,11 @@ def main():
 
     grid = Grid(grid_width, grid_height)
     current = Tetrimino(first, Coord(grid_width//2, 1))
-    queue = TQueue(queue_size)
-    hold = None
-    placed = []
-
     grid.set_current(current)
+    tqueue = TQueue(queue_size)
+    hold = None
+    
+
     grid.refresh()
     print(grid)
 
@@ -29,18 +29,23 @@ def main():
         elif cmd == 's':
             move = Coord(0, 1)
         elif cmd == 'e':
-            current.rotate(1)
+            grid.curr.rotate(1)
+            move = grid.rotate_kick()
         elif cmd == 'q':
-            current.rotate(0)
+            grid.curr.rotate(0)
+            move = grid.rotate_kick()
         else:
             break
 
-        new_pos = current.move(move)
-        in_bound, _ = grid.is_in_bounds(current, new_pos)
-        if in_bound:
-            current.pos = new_pos
-        else:
-            move_in_bounds(grid, current)
+        can_move = grid.piece_can_move(move)
+        if can_move:
+            grid.curr.move(move)
+        elif not can_move and move.equals(Coord(0, 1)):
+            grid.place_current(tqueue.get())
+
+            # move_in_bounds(grid, grid.curr)
+
+
 
         grid.refresh()
         print(grid)
@@ -64,12 +69,13 @@ def process_args():
 
     return grid_width, grid_height, queue_size, first
 
+
 def move_in_bounds(grid, piece):
-    in_bound, move = grid.is_in_bounds(piece, piece.pos)
+    in_bound, move = grid.piece_can_move(piece, piece.pos)
     while not in_bound:
         piece.pos = piece.move(move)
 
-        in_bound, move = grid.is_in_bounds(piece, piece.pos)
+        in_bound, move = grid.piece_can_move(piece, piece.pos)
 
 
 

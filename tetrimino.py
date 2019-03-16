@@ -15,6 +15,7 @@ class Tetrimino:
     def __init__(self, kind, pos=Coord(5,1)):
         self.kind = kind
         self.pos = pos
+        self.char = str(kind.value)
         self.cubes = []
 
         if kind == TPiece.I:
@@ -36,7 +37,7 @@ class Tetrimino:
         return self.kind == other.kind
 
     def move(self, dir):
-        return self.pos.add(dir)
+        self.pos = self.pos.add(dir)
 
     def rotate(self, dir=0):
         if self.kind == TPiece.Q:
@@ -52,7 +53,6 @@ class Tetrimino:
                 self.cubes[i] = Coord(curr.row, curr.col * -1)
 
         
-
 def main():
     test_rotate()
 
